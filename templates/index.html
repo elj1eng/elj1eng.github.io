@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>geolocation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form action="/" method ="post">
+            <input type="text" name="latitude" placeholder="Enter latitude">
+            <input type="text" name="longitude" placeholder="Enter longitude">
+            <button type="submit">Submit</button>
+        </form>
+        <button onclick="getLocation()">Try It</button>
+        <p id="lalo"></p>
+        <script>
+            const x = document.getElementById("lalo");
+            function getLocation() {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const data = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    };
+                    fetch('/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    x.innerHTML = "Latitude: " + data["latitude"] + "<br>Longitude: " + data["longitude"];
+            });
+        }
+        </script> 
+    </body>
+</html>
+
